@@ -1,0 +1,6 @@
+# This file tells Netlify how to build and deploy your site.
+
+[build]
+  # This is the directory where Netlify will look for your serverless functions.
+  functions = "netlify/functions/"
+
