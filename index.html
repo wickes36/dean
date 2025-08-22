@@ -90,9 +90,19 @@
                 // This URL points to our serverless function, not the Google API
                 const response = await fetch('/.netlify/functions/generate-names');
 
+                // If the response is not OK, handle potential HTML errors instead of just JSON
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                    let errorMessage = `Error: ${response.status} ${response.statusText}`;
+                    const contentType = response.headers.get("content-type");
+                    if (contentType && contentType.includes("application/json")) {
+                        const errorData = await response.json();
+                        errorMessage = errorData.error || `HTTP error! status: ${response.status}`;
+                    } else {
+                        // This handles cases where Netlify returns an HTML error page (e.g., 404)
+                        console.error("Received a non-JSON error response from the server.");
+                        errorMessage = "The server function could not be reached. Please ensure it's deployed correctly.";
+                    }
+                    throw new Error(errorMessage);
                 }
                 
                 const data = await response.json();
