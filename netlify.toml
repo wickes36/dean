@@ -1,9 +1,9 @@
 # This file tells Netlify how to build and deploy your site.
 
 [build]
-  # A simple command is sometimes needed to make sure the build process
-  # correctly discovers and deploys functions.
-  command = "echo 'No build required'"
+  # This command runs the "build" script from your package.json file.
+  # This ensures Netlify's build pipeline runs fully and detects functions.
+  command = "npm run build"
   
   # This is the directory where Netlify will look for your serverless functions.
   functions = "netlify/functions/"
