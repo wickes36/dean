@@ -7,4 +7,3 @@
   
   # This is the directory where Netlify will look for your serverless functions.
   functions = "netlify/functions/"
-
